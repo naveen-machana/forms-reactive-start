@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { getMaxListeners } from 'cluster';
 
 @Component({
   selector: 'app-root',
@@ -22,13 +23,29 @@ export class AppComponent implements OnInit {
     //});
     this.signupForm.statusChanges.subscribe(status => {
       console.log(status);
-    })
+    });
+
+    this.signupForm.setValue({
+      userData: {
+        username: 'Naveen',
+        email: 'naveen@get.com'
+      },
+      gender: 'male',
+      hobbies: []
+    });
+
+    this.signupForm.patchValue({
+      userData: {
+        username: 'Kumar',
+      }
+    });
   }
   genders = ['male', 'female'];
   signupForm: FormGroup;
 
   onSubmit() {
     console.log(this.signupForm);
+    this.signupForm.reset();
   }
   
   onAddHobby() {
